@@ -30,7 +30,7 @@ public class AuthorOperations {
         return getResponse;
     }
     
-     public Response getAuthorById(int id){
+    public Response getAuthorById(int id){
         String resourceName = "authors/"+id;
         Response getResponse = given().accept(ContentType.JSON).get(BASE_URL + resourceName);//.prettyPeek();
         return getResponse;
