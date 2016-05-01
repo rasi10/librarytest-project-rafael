@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package se.nackademin.librarytest.rafael;
 
 import static com.jayway.restassured.RestAssured.given;
@@ -109,5 +105,30 @@ public class BooksBooksAuthorOperations {
         int fetchedId = getResponse.jsonPath().getInt("books.book[-1].id");         
         return fetchedId;
     }
+    public Response createRandomBookWithAuthor(String authorName, int authorId){
+        String resourceName = "books";
+                      
+        String postBodyTemplate = ""
+                + "{\n" +
+                "\"book\":\n" +
+                "  {\n" +
+                "    \"description\":\"Description.\",\n" +
+                "    \"isbn\":\"0-7710-0868-6\",\n" +
+                "    \"nbOfPage\":411,\n" +
+                "    \"title\":\"title\",\n" +
+                "    \"author\":\n" +
+                "    {\n" +
+                "      \"name\":\"%s\",\n" +
+                "      \"id\":%s,\n" +
+                "    }\n" +
+                "  }\n" +
+                "}";
+        
+        String postBody = String.format(postBodyTemplate, authorName, authorId);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).post(BASE_URL +resourceName);
+        return postResponse;
+    } 
     
 }

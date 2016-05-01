@@ -30,7 +30,7 @@ public class TestSuiteEndPointBooksByAuthorAuthorId {
     }
     
     public void test002GetAllBooksByAuthorIdInvalidAuthorId(){
-        testName.builTestName("Test 001 - get all books by author id - Invalid author id");
+        testName.builTestName("Test 002 - get all books by author id - Invalid author id");
         BooksAuthorAuthorsOperations booksByAuthorId = new BooksAuthorAuthorsOperations();
         Response response = booksByAuthorId.getBooksByAuthorId(-111111);
         System.out.println("Status code for GET: "+ response.statusCode()); //printing the statuscode.
