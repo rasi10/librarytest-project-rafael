@@ -25,8 +25,11 @@ public class TestSuiteEndPointAuthors {
        test006GettingAnAuthorByIdInvalidID();
        test007DeleteAuthorExistingId();
        test008DeleteAuthorNotExistingId();
-       
+       test009EditTheNameOfAnAuthor();
+       test010EditTheNameOfAnAuthorInvalidAuthorId();
     }  
+    
+    
     
     public void test001GetAllAuthors(){
         testName.builTestName("Test 001 - Get all authors"); 
@@ -92,6 +95,7 @@ public class TestSuiteEndPointAuthors {
     }
      
       public void test006GettingAnAuthorByIdInvalidID(){
+        testName.builTestName("Test 006 - Getting an author by ID - invalid ID");
         AuthorOperations authorOperations = new AuthorOperations();
         Response getResponse = authorOperations.getAuthorById(-11111);
         System.out.println("Status code for GET: "+getResponse.getStatusCode()); 
@@ -118,5 +122,48 @@ public class TestSuiteEndPointAuthors {
         Response getResponse = authorOperations.deleteAuthor(-11111);
         System.out.println("Status code for DELETE: "+getResponse.getStatusCode()); 
         assertEquals("The status code should be 404!",404,getResponse.getStatusCode());
+    }
+    
+    public void test009EditTheNameOfAnAuthor(){
+        testName.builTestName("Test 009 - Edit the name of the author to my own");               
+        AuthorOperations authorOperations = new AuthorOperations();        
+        Response postResponse = authorOperations.createRandomAuthorWithNoId();
+        System.out.println("Status code for POST: "+postResponse.getStatusCode());              
+        assertEquals("Post response should have status code 201",201,postResponse.statusCode());                        
+        
+        String nameOfThelastAddedAuthor = authorOperations.getNameOfTheLastAddedAuthor();                       
+        String expectedAuthor = from(authorOperations.getJsonString()).getString("author.name");
+        assertEquals("The name of the author should be the same!",expectedAuthor,nameOfThelastAddedAuthor);
+        
+        int idOfTheLastCreatedAuthor = authorOperations.getIdOfTheLastAddedAuthor();
+        System.out.println("IDD of the last "+idOfTheLastCreatedAuthor);
+        
+        Response putResponse = authorOperations.editAuthorWithMyName(idOfTheLastCreatedAuthor);
+        System.out.println("Status code for PUT: "+putResponse.getStatusCode());
+        assertEquals("Post response should have status code 200",200,putResponse.statusCode()); 
+        
+        nameOfThelastAddedAuthor = authorOperations.getNameOfTheLastAddedAuthor();
+        expectedAuthor = "Rafael Silva";
+        assertEquals("The name of the author should be the same!",expectedAuthor,nameOfThelastAddedAuthor);
+    }
+    
+    public void test010EditTheNameOfAnAuthorInvalidAuthorId(){
+        testName.builTestName("Test 010 - Edit the name of the author - Invalid Id ");               
+        AuthorOperations authorOperations = new AuthorOperations();        
+        Response postResponse = authorOperations.createRandomAuthorWithNoId();
+        System.out.println("Status code for POST: "+postResponse.getStatusCode());              
+        assertEquals("Post response should have status code 201",201,postResponse.statusCode());                        
+        
+        String nameOfThelastAddedAuthor = authorOperations.getNameOfTheLastAddedAuthor();                       
+        String expectedAuthor = from(authorOperations.getJsonString()).getString("author.name");
+        assertEquals("The name of the author should be the same!",expectedAuthor,nameOfThelastAddedAuthor);
+        
+        int idOfTheLastCreatedAuthor = authorOperations.getIdOfTheLastAddedAuthor();
+        System.out.println("IDD of the last "+idOfTheLastCreatedAuthor);
+        
+        Response putResponse = authorOperations.editAuthorWithMyName(-111111);
+        System.out.println("Status code for PUT: "+putResponse.getStatusCode());
+        assertEquals("Post response should have status code 400",404,putResponse.statusCode());        
+        
     }
 }

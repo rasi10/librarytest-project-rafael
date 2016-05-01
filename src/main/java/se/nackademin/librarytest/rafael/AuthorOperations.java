@@ -108,4 +108,24 @@ public class AuthorOperations {
         Response deleteResponse = delete(BASE_URL+deleteResourceName);
         return deleteResponse;
     }
+    
+    public Response editAuthorWithMyName(int id){
+       String resourceName = "authors";          
+        String name = UUID.randomUUID().toString();
+        String postBodyTemplate = ""
+                + "{\n" +
+                "\"author\":\n" +
+                "  {\n" +
+                "    \"name\":\"%s\",\n" +
+                "    \"id\":%s\n" +
+                "  }\n" +
+                "}";
+        
+        String postBody = String.format(postBodyTemplate, "Rafael Silva", id);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).put(BASE_URL +resourceName);
+        return postResponse; 
+
+    }
 }
