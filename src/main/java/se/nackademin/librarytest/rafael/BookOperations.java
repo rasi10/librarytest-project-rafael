@@ -39,34 +39,7 @@ public class BookOperations {
         return getResponse;
     }
     
-    //Supporting method for creating a new random book
-    public Response createRandomBook(){
-        String resourceName = "books";
-          
-        String title = UUID.randomUUID().toString();
-        String description = UUID.randomUUID().toString();
-        String isbn = UUID.randomUUID().toString();
-               
-        String postBodyTemplate = ""
-                + "{\n" +
-                "\"book\":\n" +
-                "  {\n" +
-                "    \"description\":\"%s\",\n" +
-                "    \"isbn\":\"%s\",\n" +
-                "    \"nbOfPage\":%s,\n" +
-                "    \"title\":\"%s\"\n" +
-                "  }\n" +
-                "}";
-        
-        String postBody = String.format(postBodyTemplate, description,isbn,""+new Random().nextInt(500),title);
-        setJsonString(postBody);
-        
-        Response postResponse = given().contentType(ContentType.JSON).body(postBody).post(BASE_URL +resourceName);
-        return postResponse;
-    } 
-    
-    
-    //Supporting method for editing a book
+     //Supporting method for editing a book
     public Response editBook(){
         return null;
     }    
@@ -118,5 +91,82 @@ public class BookOperations {
         return returnArray;
         
     }
+    
+    //Supporting method for creating a new random book
+    public Response createRandomBook(){
+        String resourceName = "books";
+          
+        String title = UUID.randomUUID().toString();
+        String description = UUID.randomUUID().toString();
+        String isbn = UUID.randomUUID().toString();
+               
+        String postBodyTemplate = ""
+                + "{\n" +
+                "\"book\":\n" +
+                "  {\n" +
+                "    \"description\":\"%s\",\n" +
+                "    \"isbn\":\"%s\",\n" +
+                "    \"nbOfPage\":%s,\n" +
+                "    \"title\":\"%s\"\n" +
+                "  }\n" +
+                "}";
+        
+        String postBody = String.format(postBodyTemplate, description,isbn,""+new Random().nextInt(500),title);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).post(BASE_URL +resourceName);
+        return postResponse;
+    } 
+    
+    
+    //Supporting method for creating a new book with a id that already exists
+    public Response createInvalidBookExistingID(int bookId){
+        String resourceName = "books"; 
+               
+        String postBodyTemplate = "{\n" +
+                "\"book\":\n" +
+                "  {\n" +
+                "    \"description\":\"description\",\n" +
+                "    \"isbn\":\"isbn\",\n" +
+                "    \"nbOfPage\":411,\n" +
+                "    \"title\":\"wrong book\"\n" +
+                "    \"id\":%s\n" +
+                "  }\n" +
+                "}";      
+        
+        String postBody = String.format(postBodyTemplate, bookId);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).post(BASE_URL +resourceName);
+        return postResponse;
+    } 
+    
+     //Supporting method for creating a new book with an author that does not exist in the database
+    public Response createInvalidBookWithAuthorThatDoesNotExist(int authorId){
+        String resourceName = "books";                   
+        String postBodyTemplate = ""
+                + "{\n" +
+                "\"book\":\n" +
+                "  {\n" +
+                "    \"description\":\"description\",\n" +
+                "    \"isbn\":\"isbn\",\n" +
+                "    \"nbOfPage\":411,\n" +
+                "    \"title\":\"title of the book\"\n" +
+                "    \"author\":\n" +
+                "    {\n" +
+                "      \"name\":\"author\",\n" +
+                "      \"id\":%s\n" +
+                "    }\n" +
+                "  }\n" +
+                "}";
+        
+        String postBody = String.format(postBodyTemplate, authorId);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).post(BASE_URL +resourceName);
+        return postResponse;
+    } 
+    
+   
     
 }
