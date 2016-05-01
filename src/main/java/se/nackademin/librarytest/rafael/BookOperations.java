@@ -25,6 +25,10 @@ public class BookOperations {
         return this.jsonString;
     }
     
+    public BookOperations(){
+        
+    }
+    
     //supporting method for  getting all the books 
     public Response getAllBooks(){
         String resourceName = "books";
@@ -39,10 +43,7 @@ public class BookOperations {
         return getResponse;
     }
     
-     //Supporting method for editing a book
-    public Response editBook(){
-        return null;
-    }    
+        
     
     //supporting method for deleting a book
     public Response deleteBook(int id){
@@ -167,6 +168,79 @@ public class BookOperations {
         return postResponse;
     } 
     
-   
+    public Response editBookByIdWithNoAuthors(int id){
+       String resourceName = "books";          
+        String name = UUID.randomUUID().toString();
+        String postBodyTemplate = ""
+                + " {\n" +
+                "    \"book\": {        \n" +
+                "        \"description\": \"EditedBook description\",\n" +
+                "        \"id\":%s,\n" +
+                "        \"isbn\": \"edited isbn\",\n" +
+                "        \"nbOfPage\": 288,\n" +
+                "        \"title\": \"edited title\"\n" +
+                "    }\n" +
+                "}";
+        
+        String postBody = String.format(postBodyTemplate, id);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).put(BASE_URL +resourceName);
+        return postResponse; 
+
+    }
+    
+    public Response createRandomBookWithAuthor(String authorName, int authorId){
+        String resourceName = "books";
+                      
+        String postBodyTemplate = ""
+                + "{\n" +
+                "\"book\":\n" +
+                "  {\n" +
+                "    \"description\":\"Description.\",\n" +
+                "    \"isbn\":\"0-7710-0868-6\",\n" +
+                "    \"nbOfPage\":411,\n" +
+                "    \"title\":\"title\",\n" +
+                "    \"author\":\n" +
+                "    {\n" +
+                "      \"name\":\"%s\",\n" +
+                "      \"id\":%s,\n" +
+                "    }\n" +
+                "  }\n" +
+                "}";
+        
+        String postBody = String.format(postBodyTemplate, authorName, authorId);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).post(BASE_URL +resourceName);
+        return postResponse;
+    } 
+    
+    public Response editBookByIdWithAuthors(int bookId, String authorName, int authorId){        
+        String resourceName = "books";
+        String postBodyTemplate = ""
+                + "{\n" +
+                "\"book\":\n" +
+                "  {\n" +
+                "    \"description\":\"Description edited 2.\",\n" +
+                "    \"isbn\":\"isbnEdited 2\",\n" +
+                "    \"nbOfPage\":411,\n" +
+                "    \"title\":\"title edited 2\",\n" +
+                "     \"id\":%s,\n" +
+                "    \"author\":\n" +
+                "    {\n" +
+                "      \"name\":\"%s\",\n" +
+                "      \"id\":%s,\n" +
+                "    }\n" +
+                "  }\n" +
+                "}";
+        
+        String postBody = String.format(postBodyTemplate, bookId, authorName, authorId);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).put(BASE_URL +resourceName);
+        return postResponse; 
+
+    }
     
 }

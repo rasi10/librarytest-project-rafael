@@ -18,6 +18,7 @@ public class TestSuiteEndPointBooksBookIdAuthor {
     
     @Test
     public void testExecutionInOrder(){
+        System.out.println("\n\n\n###TEST SUITE - ENDPOINT BOOKS/BOOKID/AUTHORS###");
        //test001(); //THIS METHOD SHOUDL BE EDITED
        test();            
     }         

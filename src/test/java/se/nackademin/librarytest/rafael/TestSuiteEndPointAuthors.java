@@ -136,7 +136,7 @@ public class TestSuiteEndPointAuthors {
         assertEquals("The name of the author should be the same!",expectedAuthor,nameOfThelastAddedAuthor);
         
         int idOfTheLastCreatedAuthor = authorOperations.getIdOfTheLastAddedAuthor();
-        System.out.println("IDD of the last "+idOfTheLastCreatedAuthor);
+        //System.out.println("IDD of the last "+idOfTheLastCreatedAuthor);
         
         Response putResponse = authorOperations.editAuthorWithMyName(idOfTheLastCreatedAuthor);
         System.out.println("Status code for PUT: "+putResponse.getStatusCode());
@@ -159,7 +159,7 @@ public class TestSuiteEndPointAuthors {
         assertEquals("The name of the author should be the same!",expectedAuthor,nameOfThelastAddedAuthor);
         
         int idOfTheLastCreatedAuthor = authorOperations.getIdOfTheLastAddedAuthor();
-        System.out.println("IDD of the last "+idOfTheLastCreatedAuthor);
+        //System.out.println("IDD of the last "+idOfTheLastCreatedAuthor);
         
         Response putResponse = authorOperations.editAuthorWithMyName(-111111);
         System.out.println("Status code for PUT: "+putResponse.getStatusCode());
