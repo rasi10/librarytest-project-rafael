@@ -32,6 +32,13 @@ public class BookOperations {
         return getResponse;
     }
     
+    //supporting method for  getting all the books 
+    public Response getABookById(int id){
+        String resourceName = "books/"+id;
+        Response getResponse = given().accept(ContentType.JSON).get(BASE_URL + resourceName);//.prettyPeek();
+        return getResponse;
+    }
+    
     //Supporting method for creating a new random book
     public Response createRandomBook(){
         String resourceName = "books";
