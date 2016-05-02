@@ -76,7 +76,7 @@ public class AuthorOperations {
                 "  }\n" +
                 "}";
         
-        String postBody = String.format(postBodyTemplate, name, new Random().nextInt(500));
+        String postBody = String.format(postBodyTemplate, name, new Random().nextInt(10000));
         setJsonString(postBody);
         
         Response postResponse = given().contentType(ContentType.JSON).body(postBody).post(BASE_URL +resourceName);
@@ -110,8 +110,7 @@ public class AuthorOperations {
     }
     
     public Response editAuthorWithMyName(int id){
-       String resourceName = "authors";          
-        String name = UUID.randomUUID().toString();
+        String resourceName = "authors";                  
         String postBodyTemplate = ""
                 + "{\n" +
                 "\"author\":\n" +

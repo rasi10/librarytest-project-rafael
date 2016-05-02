@@ -54,7 +54,7 @@ public class BooksBooksAuthorOperations {
                 "  }\n" +
                 "}";
         
-        String postBody = String.format(postBodyTemplate, name, new Random().nextInt(500));
+        String postBody = String.format(postBodyTemplate, name, new Random().nextInt(10000));
         setJsonString(postBody);
         
         Response postResponse = given().contentType(ContentType.JSON).body(postBody).post(BASE_URL +resourceName);
@@ -148,5 +148,54 @@ public class BooksBooksAuthorOperations {
         Response postResponse = given().contentType(ContentType.JSON).body(postBody).post(BASE_URL +resourceName);
         return postResponse;
     } 
+    
+    public Response putAuthorToRandomlyCreatedBookWithAuthor(int bookId, String authorName, int authorId){
+        String resourceName = "books/"+bookId+"/authors";
+        
+        String postBodyTemplate = "{\n" +
+                "    \"authors\": {\n" +
+                "        \"author\": {\n" +
+                "            \"id\": %s,\n" +
+                "            \"name\":%s,\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        
+        //String postBody = String.format(postBodyTemplate, authorId,authorName);
+        String postBody = String.format(postBodyTemplate,authorId,authorName);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).put(BASE_URL +resourceName);
+        return postResponse;
+    } 
+    
+    public Response putAuthorToRandomlyCreatedBookWithWrongAuthor(int bookId){
+        String resourceName = "books/"+bookId+"/authors";
+        /**              
+        String postBodyTemplate =""
+                + "{\n" +
+                "    \"author\": {\n" +
+                "        \"id\": %s,\n" +
+                "        \"name\":%s,\n" +
+                "    }\n" +
+                "}";*/
+        
+        String postBodyTemplate = "{\n" +
+                "    \"authors\": {\n" +
+                "        \"author\": {\n" +
+                "            \"id\": 2,\n" +
+                "            \"name\": \"rafaeaaaaaaaaaaaaaaaaa\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        
+        //String postBody = String.format(postBodyTemplate, authorId,authorName);
+        String postBody = String.format(postBodyTemplate);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).put(BASE_URL +resourceName);
+        return postResponse;
+    } 
+    
     
 }
