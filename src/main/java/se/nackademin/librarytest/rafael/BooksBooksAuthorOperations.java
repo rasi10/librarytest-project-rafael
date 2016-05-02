@@ -131,4 +131,22 @@ public class BooksBooksAuthorOperations {
         return postResponse;
     } 
     
+    public Response postAuthorToRandomlyCreatedBook(int bookId, String authorName, int authorId){
+        String resourceName = "books/"+bookId+"/authors";
+                      
+        String postBodyTemplate =""
+                + "{\n" +
+                "    \"author\": {\n" +
+                "        \"id\": %s,\n" +
+                "        \"name\":%s,\n" +
+                "    }\n" +
+                "}";
+        
+        String postBody = String.format(postBodyTemplate, authorId,authorName);
+        setJsonString(postBody);
+        
+        Response postResponse = given().contentType(ContentType.JSON).body(postBody).post(BASE_URL +resourceName);
+        return postResponse;
+    } 
+    
 }
